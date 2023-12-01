@@ -19,18 +19,22 @@ function playRound(computerSelection, userSelection) {
             console.log("TIE! Restarting round");
             return(playRound(getComputerSelection(), prompt("Pick: Rock, Paper, or Scissors?").toLowerCase()));
         } else if (computerSelection == "paper") {
-            return("You lose! paper beats rock");
+            console.log("You lose! paper beats rock");
+            return("computer");
         } else {
-            return("You win! Rock beats Scissors");
+            console.log("You win! Rock beats Scissors");
+            return("user");
         }
     } else if (userSelection == "paper") {
         if (computerSelection == userSelection) {
             console.log("TIE! Restarting round");
             return(playRound(getComputerSelection(), prompt("Pick: Rock, Paper, or Scissors?").toLowerCase()));
         } else if (computerSelection == "scissors") {
-            return("You lose! Scissors beats Paper");
+            console.log("You lose! Scissors beats Paper");
+            return("computer");
         } else {
-            return("You win! Paper beats Rock");
+            console.log("You win! Paper beats Rock");
+            return("user");
         }
     }
     else if(userSelection == "scissors") {
@@ -38,13 +42,37 @@ function playRound(computerSelection, userSelection) {
             console.log("TIE! Restarting round");
             return(playRound(getComputerSelection(), prompt("Pick: Rock, Paper, or Scissors?").toLowerCase()));
         } else if (computerSelection == "rock") {
-            return("You lose! Rock beats Scissors");
+            console.log("You lose! Rock beats Scissors");
+            return("computer");
         } else {
-            return("You win! Scissors beats Rock");
+            console.log("You win! Scissors beats Rock");
+            return("user");
         }
     } else {
         console.log("Oops, something went terribly wrong getting the user's selection!");
     }
 }
 
-console.log(playRound(getComputerSelection(), prompt("Pick: Rock, Paper, or Scissors?").toLowerCase()));
+function game() {
+    let userScore = 0;
+    let computerScore = 0;
+
+    for(let i = 0; i < 5; i++) {
+        let winner = playRound(getComputerSelection(), prompt("Pick: Rock, Paper, or Scissors?").toLowerCase());
+        if (winner == "computer") {
+            computerScore++;
+            if (computerScore == 3) {
+                console.log("You lose the game!");
+                break;
+            }
+        } else {
+            userScore++;
+            if(userScore == 3) {
+                console.log("You win the game!");
+                break;
+            }
+        }
+    }
+}
+
+game();
