@@ -13,65 +13,79 @@ function getComputerSelection() {
 }
 
 function playRound(computerSelection, userSelection) {
-    console.log(`user selection = ${userSelection}, computer selection = ${computerSelection}`);
+    roundResults.textContent = `user selected ${userSelection}, computer selected ${computerSelection}.\n`;
     if (userSelection == "rock") {
         if (computerSelection == userSelection) {
-            console.log("TIE! Restarting round");
+            roundResults.textContent += "TIE! Restarting round";
             //return (playRound(getComputerSelection(), prompt("Pick: Rock, Paper, or Scissors?").toLowerCase()));
         } else if (computerSelection == "paper") {
-            console.log("You lose! paper beats rock");
-            return ("computer");
+            roundResults.textContent += `You lose! paper beats rock`;
+            return "computer";
         } else {
-            console.log("You win! Rock beats Scissors");
-            return ("user");
+            roundResults.textContent += "You win! Rock beats Scissors";
+            return "user";
         }
     } else if (userSelection == "paper") {
         if (computerSelection == userSelection) {
-            console.log("TIE! Restarting round");
+            roundResults.textContent += "TIE! Restarting round";
             //return (playRound(getComputerSelection(), prompt("Pick: Rock, Paper, or Scissors?").toLowerCase()));
         } else if (computerSelection == "scissors") {
-            console.log("You lose! Scissors beats Paper");
-            return ("computer");
+            roundResults.textContent += "You lose! Scissors beats Paper";
+            return "computer";
         } else {
-            console.log("You win! Paper beats Rock");
-            return ("user");
+            roundResults.textContent += "You win! Paper beats Rock";
+            return "user";
         }
     }
     else if (userSelection == "scissors") {
         if (computerSelection == userSelection) {
-            console.log("TIE! Restarting round");
+            roundResults.textContent += "TIE! Restarting round";
             //return (playRound(getComputerSelection(), prompt("Pick: Rock, Paper, or Scissors?").toLowerCase()));
         } else if (computerSelection == "rock") {
-            console.log("You lose! Rock beats Scissors");
-            return ("computer");
+            roundResults.textContent += "You lose! Rock beats Scissors";
+            return "computer";
         } else {
-            console.log("You win! Scissors beats Rock");
-            return ("user");
+            roundResults.textContent += "You win! Scissors beats Rock";
+            return "user";
         }
     } else {
-        console.log("Oops, something went terribly wrong getting the user's selection!");
+        roundResults.textContent += "Oops, something went terribly wrong getting the user's selection!";
     }
 }
 
 function game() {
-    let userScore = 0;
-    let computerScore = 0;
+    let winner;
 
-    let winner = playRound(getComputerSelection(), prompt("Pick: Rock, Paper, or Scissors?").toLowerCase());
-    if (winner == "computer") {
-        computerScore++;
-        console.log("You lose the game!");
-    } else {
-        userScore++;
-        console.log("You win the game!");
-    }
+    gameButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            winner = playRound(getComputerSelection(), button.className);
+
+            if (winner == "computer") {
+                computerScore++;
+                if (computerScore == 5) {
+                    gameResults.textContent = "You lose the game!";
+                }
+            } else if (winner == "user") {
+                userScore++;
+                if (userScore == 5) {
+                    gameResults.textContent = "You win the game!";
+                }
+            }
+            currentScore.textContent = `Computer Score: ${computerScore}\nUser Score: ${userScore}`;
+        });
+    });
 }
 
+let userScore = 0;
+let computerScore = 0;
 const gameButtons = document.querySelectorAll('button');
-gameButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-        playRound(getComputerSelection(), button.className);
-    });
-});
+const gameStats = document.querySelector('.game-stats');
 
-//game();
+const currentScore = document.createElement('p');
+gameStats.append(currentScore);
+const roundResults = document.createElement('p');
+gameStats.append(roundResults);
+const gameResults = document.createElement('p');
+gameStats.append(gameResults);
+
+game();
