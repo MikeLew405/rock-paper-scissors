@@ -1,3 +1,32 @@
+body {
+    margin: 0px;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    background-color: #3D3B40;    
+    width: 100%;
+}
+
+.game-stats {
+    background-color: #BFCFE7;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.header-text {
+    font-family: 'Tektur', sans-serif;
+    color: #F8EDFF;
+    font-size: 40px;
+}
+
 p {
     white-space: pre-line;
 }
